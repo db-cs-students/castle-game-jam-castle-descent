@@ -4,6 +4,7 @@ Creators:Adam and Eli
 Description:
 
  */
+// creating backgrounds
 // creating sprites
 let Knight = sprites.create(img`
     . . . . . . f f f f f f . . . .

@@ -3,6 +3,8 @@ Title:Castle Descent
 Creators:Adam and Eli
 Description:
 """
+#creating backgrounds
+
 #creating sprites
 Knight = sprites.create(img("""
     . . . . . . f f f f f f . . . .
@@ -22,3 +24,9 @@ Knight = sprites.create(img("""
     . . . . . . f f f f f f . . . .
     . . . . . . . f f f . . . . . .
 """))
+
+#tilemaps
+
+#collisions
+
+#controls
