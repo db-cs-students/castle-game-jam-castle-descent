@@ -182,7 +182,7 @@ scene.set_tile(7, img("""
 """), True)
 #controls
 def on_jump():
-    Knight.vy = -85
-    Knight.ay = 175
+    if Knight.is_hitting_tile(CollisionDirection.BOTTOM):
+        Knight.vy = -85
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_jump)
 controller.move_sprite(Knight, 75, 0)

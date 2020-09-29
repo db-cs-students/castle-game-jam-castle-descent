@@ -181,7 +181,9 @@ scene.setTile(7, img`
 `, true)
 // controls
 controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
-    Knight.vy = -85
-    Knight.ay = 175
+    if (Knight.isHittingTile(CollisionDirection.Bottom)) {
+        Knight.vy = -85
+    }
+    
 })
 controller.moveSprite(Knight, 75, 0)
