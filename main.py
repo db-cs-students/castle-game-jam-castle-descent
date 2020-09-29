@@ -291,7 +291,7 @@ controller.move_sprite(Knight, 75, 0)
 
 #enemies
 
-scene.place(tiles., None)
+scene.place(tiles.get_tile_location(17, 3), None)
 # info
 info.set_life(3)
 def on_life_zero():
