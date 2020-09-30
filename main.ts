@@ -280,6 +280,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
     
 })
 controller.moveSprite(Knight, 75, 0)
+game.onUpdate(function on_update() {
+    if (controller.dx() == 1) {
+        
+    }
+    
+})
 // enemies
 let enemy = sprites.create(img`
     ........................

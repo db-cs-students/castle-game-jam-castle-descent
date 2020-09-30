@@ -278,6 +278,10 @@ def on_jump():
         Knight.vy = -85
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_jump)
 controller.move_sprite(Knight, 75, 0)
+def on_update():
+    if controller.dx() == 1:
+        pass
+game.on_update(on_update)
 
 #enemies
 enemy = sprites.create(img("""
