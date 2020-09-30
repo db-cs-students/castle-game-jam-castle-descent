@@ -147,16 +147,14 @@ let Knight = sprites.create(img`
     . . . . . . . f f f . . . . . .
 `, SpriteKind.Player)
 Knight.ay = 175
-Knight.y = 75
-Knight.x = 25
 scene.cameraFollowSprite(Knight)
 // tilemaps
 scene.setTileMap(img`
-    .............................5..................
     ................................................
-    .................................5.............6
+    ................................................
+    ...............................................6
     .................2.........2...77777....2..77777
-    .......55.......7777..5...7777.......77777......
+    ................7777......7777.......77777......
     7777.......7777......7777.......................
     ......7777......................................
     444444444444444444444444444444444444444444444444
@@ -245,6 +243,7 @@ scene.setTile(4, img`
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 `, true)
 // lava
+tiles.placeOnTile(Knight, tiles.getTileLocation(3, 4))
 // controls
 controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function on_button_event_b_pressed() {
     let arrow = sprites.createProjectileFromSprite(img`
@@ -255,16 +254,16 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-        . . . . . . . . . . b . . . . .
-        . . . e e e e e e e b b . . . .
-        . . . . . . . . . . b . . . . .
+        . . . . b . . . . . . . . . . .
+        . . . b b e e e e e e e e e . .
+        . . . . b . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    `, Knight, 100, 0)
+    `, Knight, -100, 0)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
     if (Knight.isHittingTile(CollisionDirection.Bottom)) {
@@ -300,14 +299,13 @@ let enemy = sprites.create(img`
     ........................
     ........................
 `, SpriteKind.Enemy)
-tiles.placeOnTile(enemy, tiles.getTileLocation(17, 3))
-enemy.follow(Knight, 50, 30)
+tiles.placeOnTile(enemy, tiles.getTileLocation(1, 4))
+enemy.follow(Knight, 150, 30)
 //  info
 info.setLife(3)
 info.setScore(0)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     info.changeLifeBy(-1)
-    enemy.destroy()
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
     enemy.vx = 0

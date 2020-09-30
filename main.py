@@ -148,18 +148,16 @@ Knight = sprites.create(img("""
 """), SpriteKind.player)
 
 Knight.ay = 175
-Knight.y = 75
-Knight.x = 25
 
 scene.camera_follow_sprite(Knight)
 
 #tilemaps
 scene.set_tile_map(img("""
-    .............................5..................
     ................................................
-    .................................5.............6
+    ................................................
+    ...............................................6
     .................2.........2...77777....2..77777
-    .......55.......7777..5...7777.......77777......
+    ................7777......7777.......77777......
     7777.......7777......7777.......................
     ......7777......................................
     444444444444444444444444444444444444444444444444
@@ -244,7 +242,7 @@ scene.set_tile(4, img("""
     4 5 5 5 5 5 5 4 4 4 2 4 2 4 2 4
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 """), True) #lava
-
+tiles.place_on_tile(Knight, tiles.get_tile_location(3, 4))
 
 #controls
 def on_button_event_b_pressed():
@@ -256,16 +254,16 @@ def on_button_event_b_pressed():
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-        . . . . . . . . . . b . . . . .
-        . . . e e e e e e e b b . . . .
-        . . . . . . . . . . b . . . . .
+        . . . . b . . . . . . . . . . .
+        . . . b b e e e e e e e e e . .
+        . . . . b . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    """), Knight, 100, 0)
+    """), Knight, -100, 0)
 
 controller.player1.on_button_event(ControllerButton.B, ControllerButtonEvent.PRESSED, on_button_event_b_pressed)
 def on_jump():
@@ -273,6 +271,7 @@ def on_jump():
         Knight.vy = -85
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_jump)
 controller.move_sprite(Knight, 75, 0)
+
 #enemies
 enemy = sprites.create(img("""
     ........................
@@ -301,9 +300,9 @@ enemy = sprites.create(img("""
     ........................
 """), SpriteKind.enemy)
 
-tiles.place_on_tile(enemy, tiles.get_tile_location(17, 3))
+tiles.place_on_tile(enemy, tiles.get_tile_location(1, 4))
 
-enemy.follow(Knight, 50, 30)
+enemy.follow(Knight, 150, 30)
 
 # info
 info.set_life(3)
@@ -311,7 +310,6 @@ info.set_score(0)
 
 def on_overlap(sprite, otherSprite):
     info.change_life_by(-1)
-    enemy.destroy()
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_overlap)
 def on_overlap2(sprite, otherSprite):
     enemy.vx = 0
