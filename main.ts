@@ -307,9 +307,11 @@ info.setLife(3)
 info.setScore(0)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     info.changeLifeBy(-1)
+    enemy.destroy()
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
-    enemy.destroy()
+    enemy.vx = 0
+    enemy.vy = 0
 })
 info.onLifeZero(function on_life_zero() {
     game.over(false)

@@ -300,17 +300,22 @@ enemy = sprites.create(img("""
     ........................
     ........................
 """), SpriteKind.enemy)
+
 tiles.place_on_tile(enemy, tiles.get_tile_location(17, 3))
+
 enemy.follow(Knight, 50, 30)
+
 # info
 info.set_life(3)
 info.set_score(0)
 
 def on_overlap(sprite, otherSprite):
     info.change_life_by(-1)
+    enemy.destroy()
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_overlap)
 def on_overlap2(sprite, otherSprite):
-    enemy.destroy()
+    enemy.vx = 0
+    enemy.vy = 0
 sprites.on_overlap(SpriteKind.enemy, SpriteKind.projectile, on_overlap2)
 def on_life_zero():
     game.over(False)
