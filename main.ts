@@ -127,27 +127,6 @@ scene.setBackgroundImage(img`
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 `)
-// creating sprites
-let Knight = sprites.create(img`
-    . . . . . . f f f f f f . . . .
-    . . . . f f e e e e f 2 f . . .
-    . . . f f e e e e f 2 2 2 f . .
-    . . . f e e e f f e e e e f . .
-    . . . f f f f e e 2 2 2 2 e f .
-    . . . f e 2 2 2 f f f f e 2 f .
-    . . f f f f f f f e e e f f f .
-    . . f f e 4 4 e b f 4 4 e e f .
-    . . f e e 4 d 4 1 f d d e f . .
-    . . . f e e e 4 d d d d f . . .
-    . . . . f f e e 4 4 4 e f . . .
-    . . . . . 4 d d e 2 2 2 f . . .
-    . . . . . e d d e 2 2 2 f . . .
-    . . . . . f e e f 4 5 5 f . . .
-    . . . . . . f f f f f f . . . .
-    . . . . . . . f f f . . . . . .
-`, SpriteKind.Player)
-Knight.ay = 175
-scene.cameraFollowSprite(Knight)
 // tilemaps
 scene.setTileMap(img`
     ................................................
@@ -230,7 +209,7 @@ scene.setTile(2, img`
     ........................
     ........................
     ........................
-    b.......................
+    ........................
 `)
 // Spike
 scene.setTile(4, img`
@@ -252,7 +231,28 @@ scene.setTile(4, img`
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 `, true)
 // lava
+// creating sprites
+let Knight = sprites.create(img`
+    . . . . . . f f f f f f . . . .
+    . . . . f f e e e e f 2 f . . .
+    . . . f f e e e e f 2 2 2 f . .
+    . . . f e e e f f e e e e f . .
+    . . . f f f f e e 2 2 2 2 e f .
+    . . . f e 2 2 2 f f f f e 2 f .
+    . . f f f f f f f e e e f f f .
+    . . f f e 4 4 e b f 4 4 e e f .
+    . . f e e 4 d 4 1 f d d e f . .
+    . . . f e e e 4 d d d d f . . .
+    . . . . f f e e 4 4 4 e f . . .
+    . . . . . 4 d d e 2 2 2 f . . .
+    . . . . . e d d e 2 2 2 f . . .
+    . . . . . f e e f 4 5 5 f . . .
+    . . . . . . f f f f f f . . . .
+    . . . . . . . f f f . . . . . .
+`, SpriteKind.Player)
 tiles.placeOnTile(Knight, tiles.getTileLocation(3, 1))
+Knight.ay = 175
+scene.cameraFollowSprite(Knight)
 // controls
 controller.moveSprite(Knight, 75, 0)
 controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function on_button_event_b_pressed() {
@@ -355,12 +355,14 @@ let enemy = sprites.create(img`
     ........................
     ........................
 `, SpriteKind.Enemy)
+enemy.setFlag(SpriteFlag.BounceOnWall, true)
 tiles.placeOnTile(enemy, tiles.getTileLocation(0, 1))
 // put enemy at starting point
 enemy.follow(Knight, 125, 25)
 // make enemy chase the player 
 //  info
 info.setLife(3)
+info.setScore(0)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     // hurt player when hitting enemy
     info.changeLifeBy(-1)
@@ -383,5 +385,49 @@ scene.onHitTile(SpriteKind.Player, 4, function on_hit_tile(Knight: Sprite) {
 })
 scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     // win when hitting exit
-    game.over(true)
+    info.changeScoreBy(1)
+    if (info.score() == 1) {
+        scene.setTileMap(img`
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ........................7.......................
+        ..................7..7.......77......7.........6
+        ...............7..........7.......7......7....77
+        .........7..7...............................7...
+        ......7.........................................
+        7777............................................
+        444444444444444444444444444444444444444444444444
+    `)
+    } else if (info.score() == 2) {
+        scene.setTileMap(img`
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ..................................777..........6
+            .............................7777............777
+            ...........................7.............777....
+            ......................7777..........7777........
+            ...................7............................
+            ..............7..7.............7777.............
+            .....77777..7........7777..777..................
+            7777............................................
+            444444444444444444444444444444444444444444444444
+        `)
+    }
+    
+    tiles.placeOnTile(enemy, tiles.getTileLocation(0, 13))
+    tiles.placeOnTile(Knight, tiles.getTileLocation(3, 13))
+    enemy.vx = 0
+    enemy.vy = 0
 })

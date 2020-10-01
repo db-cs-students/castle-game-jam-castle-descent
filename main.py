@@ -126,29 +126,6 @@ scene.set_background_image(img("""
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 """))
-#creating sprites
-Knight = sprites.create(img("""
-    . . . . . . f f f f f f . . . .
-    . . . . f f e e e e f 2 f . . .
-    . . . f f e e e e f 2 2 2 f . .
-    . . . f e e e f f e e e e f . .
-    . . . f f f f e e 2 2 2 2 e f .
-    . . . f e 2 2 2 f f f f e 2 f .
-    . . f f f f f f f e e e f f f .
-    . . f f e 4 4 e b f 4 4 e e f .
-    . . f e e 4 d 4 1 f d d e f . .
-    . . . f e e e 4 d d d d f . . .
-    . . . . f f e e 4 4 4 e f . . .
-    . . . . . 4 d d e 2 2 2 f . . .
-    . . . . . e d d e 2 2 2 f . . .
-    . . . . . f e e f 4 5 5 f . . .
-    . . . . . . f f f f f f . . . .
-    . . . . . . . f f f . . . . . .
-"""), SpriteKind.player)
-
-Knight.ay = 175
-
-scene.camera_follow_sprite(Knight)
 
 #tilemaps
 scene.set_tile_map(img("""
@@ -229,7 +206,7 @@ scene.set_tile(2, img("""
     ........................
     ........................
     ........................
-    b.......................
+    ........................
 """)) #Spike
 scene.set_tile(4, img("""
     5 4 4 5 5 4 4 4 4 2 2 2 4 4 4 4
@@ -249,10 +226,33 @@ scene.set_tile(4, img("""
     4 5 5 5 5 5 5 4 4 4 2 4 2 4 2 4
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 """), True) #lava
+
+#creating sprites
+Knight = sprites.create(img("""
+    . . . . . . f f f f f f . . . .
+    . . . . f f e e e e f 2 f . . .
+    . . . f f e e e e f 2 2 2 f . .
+    . . . f e e e f f e e e e f . .
+    . . . f f f f e e 2 2 2 2 e f .
+    . . . f e 2 2 2 f f f f e 2 f .
+    . . f f f f f f f e e e f f f .
+    . . f f e 4 4 e b f 4 4 e e f .
+    . . f e e 4 d 4 1 f d d e f . .
+    . . . f e e e 4 d d d d f . . .
+    . . . . f f e e 4 4 4 e f . . .
+    . . . . . 4 d d e 2 2 2 f . . .
+    . . . . . e d d e 2 2 2 f . . .
+    . . . . . f e e f 4 5 5 f . . .
+    . . . . . . f f f f f f . . . .
+    . . . . . . . f f f . . . . . .
+"""), SpriteKind.player)
+
 tiles.place_on_tile(Knight, tiles.get_tile_location(3, 1))
+Knight.ay = 175
+
+scene.camera_follow_sprite(Knight)
 
 #controls
-
 controller.move_sprite(Knight, 75, 0)
 
 def on_button_event_b_pressed(): #shoot arrow
@@ -349,13 +349,14 @@ enemy = sprites.create(img("""
     ........................
     ........................
 """), SpriteKind.enemy)
-
+enemy.set_flag(SpriteFlag.BOUNCE_ON_WALL, True)
 tiles.place_on_tile(enemy, tiles.get_tile_location(0, 1)) #put enemy at starting point
 
 enemy.follow(Knight, 125, 25) #make enemy chase the player 
 
 # info
 info.set_life(3)
+info.set_score(0)
 
 def on_overlap(sprite, otherSprite): #hurt player when hitting enemy
     info.change_life_by(-1) #TODO try and make true invincibility frames
@@ -375,5 +376,47 @@ def on_hit_tile(Knight): #lose when hitting lava
 scene.on_hit_tile(SpriteKind.player, 4, on_hit_tile)
 
 def on_hit_tile2(sprite): #win when hitting exit
-    game.over(True)
+    info.change_score_by(1)
+    if info.score() == 1:
+        scene.set_tile_map(img("""
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ................................................
+        ........................7.......................
+        ..................7..7.......77......7.........6
+        ...............7..........7.......7......7....77
+        .........7..7...............................7...
+        ......7.........................................
+        7777............................................
+        444444444444444444444444444444444444444444444444
+    """))
+    elif info.score() == 2:
+        scene.set_tile_map(img("""
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ................................................
+            ..................................777..........6
+            .............................7777............777
+            ...........................7.............777....
+            ......................7777..........7777........
+            ...................7............................
+            ..............7..7.............7777.............
+            .....77777..7........7777..777..................
+            7777............................................
+            444444444444444444444444444444444444444444444444
+        """))
+    tiles.place_on_tile(enemy, tiles.get_tile_location(0, 13))
+    tiles.place_on_tile(Knight, tiles.get_tile_location(3, 13))
+    enemy.vx = 0
+    enemy.vy = 0
 scene.on_hit_tile(SpriteKind.player, 6, on_hit_tile2)
