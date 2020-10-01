@@ -126,7 +126,9 @@ scene.set_background_image(img("""
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 """))
-
+game.splash("Press A to jump")
+game.splash("You can climb walls by pressing A while against a wall")
+game.splash("Press B to shoot arrows and slow the ghost")
 #tilemaps
 scene.set_tile_map(img("""
     ................................................
