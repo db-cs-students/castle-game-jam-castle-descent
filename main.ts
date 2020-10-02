@@ -244,7 +244,7 @@ scene.setTile(5, img`
     . . . . . . 6 6 6 6 . . . . . .
     . . . . . . . . . . . . . . . .
 `, true)
-// final exit
+// destroy ghost
 // creating sprites
 let Knight = sprites.create(img`
     . . . . . . f f f f f f . . . .

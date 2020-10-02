@@ -237,7 +237,7 @@ scene.set_tile(5, img("""
     . . . . 6 6 8 8 8 8 6 6 . . . .
     . . . . . . 6 6 6 6 . . . . . .
     . . . . . . . . . . . . . . . .
-"""), True) #final exit
+"""), True) #destroy ghost
 
 #creating sprites
 Knight = sprites.create(img("""
