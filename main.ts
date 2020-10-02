@@ -127,9 +127,9 @@ scene.setBackgroundImage(img`
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 `)
-// game.splash("Press A to jump")
-// game.splash("You can climb walls by pressing A while against a wall")
-// game.splash("Press B to shoot arrows and slow the ghost")
+game.splash("Press A to jump")
+game.splash("You can climb walls by pressing A while against a wall")
+game.splash("Press B to shoot arrows and slow the ghost")
 // tilemaps
 scene.setTileMap(img`
     ................................................
@@ -418,7 +418,7 @@ let enemy = sprites.create(img`
 `, SpriteKind.Enemy)
 tiles.placeOnTile(enemy, tiles.getTileLocation(0, 1))
 // put enemy at starting point
-enemy.follow(Knight, 110, 25)
+enemy.follow(Knight, 110, 15)
 // make enemy chase the player 
 //  info
 info.setLife(3)
