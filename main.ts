@@ -259,8 +259,29 @@ scene.cameraFollowSprite(Knight)
 // controls
 controller.moveSprite(Knight, 75, 0)
 controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Pressed, function on_button_event_b_pressed() {
+    let arrow: Sprite;
     // shoot arrow
-    let arrow = sprites.createProjectileFromSprite(img`
+    if (controller.dx() > 0) {
+        arrow = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . b . . . .
+            . . e e e e e e e e e b b . . .
+            . . . . . . . . . . . b . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+        `, Knight, 100, 0)
+    } else if (controller.dx() < 0) {
+        arrow = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
@@ -277,7 +298,28 @@ controller.player1.onButtonEvent(ControllerButton.B, ControllerButtonEvent.Press
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    `, Knight, -100, 0)
+        `, Knight, -100, 0)
+    } else {
+        arrow = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . b . . . . . . . . . . .
+        . . . b b e e e e e e e e e . .
+        . . . . b . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        `, Knight, -100, 0)
+    }
+    
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
     // jump
@@ -287,7 +329,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
         // wall jump
         Knight.vy = -85
     } else if (Knight.isHittingTile(CollisionDirection.Right)) {
-        // TODO make wall jump move you opposite direction
         Knight.vy = -85
     }
     

@@ -258,7 +258,28 @@ scene.camera_follow_sprite(Knight)
 controller.move_sprite(Knight, 75, 0)
 
 def on_button_event_b_pressed(): #shoot arrow
-    arrow = sprites.create_projectile_from_sprite(img("""
+    
+    if controller.dx() > 0:
+        arrow = sprites.create_projectile_from_sprite(img("""
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . b . . . .
+            . . e e e e e e e e e b b . . .
+            . . . . . . . . . . . b . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . .
+        """), Knight, 100, 0)
+    elif controller.dx() < 0:
+        arrow = sprites.create_projectile_from_sprite(img("""
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
@@ -275,14 +296,33 @@ def on_button_event_b_pressed(): #shoot arrow
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    """), Knight, -100, 0)
+        """), Knight, -100, 0)
+    else:
+        arrow = sprites.create_projectile_from_sprite(img("""
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . b . . . . . . . . . . .
+        . . . b b e e e e e e e e e . .
+        . . . . b . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        """), Knight, -100, 0)
 controller.player1.on_button_event(ControllerButton.B, ControllerButtonEvent.PRESSED, on_button_event_b_pressed)
 
 def on_jump(): #jump
     if Knight.is_hitting_tile(CollisionDirection.BOTTOM): 
         Knight.vy = -85
     elif Knight.is_hitting_tile(CollisionDirection.LEFT): #wall jump
-        Knight.vy = -85 #TODO make wall jump move you opposite direction
+        Knight.vy = -85
     elif Knight.is_hitting_tile(CollisionDirection.RIGHT):
         Knight.vy = -85 
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_jump)
