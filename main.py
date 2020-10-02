@@ -407,7 +407,7 @@ enemy = sprites.create(img("""
 
 tiles.place_on_tile(enemy, tiles.get_tile_location(0, 1)) #put enemy at starting point
 
-enemy.follow(Knight, 110, 15) #make enemy chase the player 
+enemy.follow(Knight, 110, 20) #make enemy chase the player 
 
 # info
 info.set_life(3)
@@ -420,7 +420,7 @@ def on_overlap(sprite, otherSprite): #hurt player when hitting enemy
     enemy.vy = 0
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_overlap)
 def on_overlap2(sprite, otherSprite): #stun enemy
-    enemy.vx = -25
+    enemy.vx = -15
     enemy.vy = 0
 sprites.on_overlap(SpriteKind.enemy, SpriteKind.projectile, on_overlap2)
 def on_life_zero(): #lose when dying
@@ -681,4 +681,4 @@ scene.on_hit_tile(SpriteKind.player, 5, on_hit_tile5)
 
 def on_update_interval():
     enemy.set_flag(SpriteFlag.GHOST, False)
-game.on_update_interval(1000, on_update_interval)
+game.on_update_interval(750, on_update_interval)

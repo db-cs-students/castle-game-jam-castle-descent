@@ -418,7 +418,7 @@ let enemy = sprites.create(img`
 `, SpriteKind.Enemy)
 tiles.placeOnTile(enemy, tiles.getTileLocation(0, 1))
 // put enemy at starting point
-enemy.follow(Knight, 110, 15)
+enemy.follow(Knight, 110, 20)
 // make enemy chase the player 
 //  info
 info.setLife(3)
@@ -433,7 +433,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprit
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
     // stun enemy
-    enemy.vx = -25
+    enemy.vx = -15
     enemy.vy = 0
 })
 info.onLifeZero(function on_life_zero() {
@@ -687,6 +687,6 @@ scene.onHitTile(SpriteKind.Player, 5, function on_hit_tile5(sprite: Sprite) {
         . . . . . . . . . . . . . . . .
     `, false)
 })
-game.onUpdateInterval(1000, function on_update_interval() {
+game.onUpdateInterval(750, function on_update_interval() {
     enemy.setFlag(SpriteFlag.Ghost, false)
 })
