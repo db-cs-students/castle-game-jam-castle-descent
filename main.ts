@@ -189,32 +189,24 @@ scene.setTile(6, img`
 `, true)
 // exit
 scene.setTile(2, img`
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-`)
-// Spike
+    d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+    1 d d d d d b d d d d d d d d b
+    1 d d d d d b d d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d d b d d d d d d b
+    1 d d d d d d d d b d d d d d b
+    1 d d d d d d d d b d d d d d b
+    1 d d d d d d d b 1 b b d d d b
+    1 d d d d d d d b 1 d d b b d b
+    1 d d d d d d b 1 d d d d d b b
+    1 d d d d d b b 1 d d d d d d b
+    1 d d d d d b 1 d d d d d d d b
+    1 d d d d b b 1 d d d d d d d b
+    b b b b b b b b b b b b b b b b
+`, true)
+// cracked wall
 scene.setTile(4, img`
     5 4 4 5 5 4 4 4 4 2 2 2 4 4 4 4
     4 4 4 4 4 5 5 4 2 2 2 2 4 4 4 5
@@ -407,7 +399,7 @@ let enemy = sprites.create(img`
 `, SpriteKind.Enemy)
 tiles.placeOnTile(enemy, tiles.getTileLocation(0, 1))
 // put enemy at starting point
-enemy.follow(Knight, 125, 25)
+enemy.follow(Knight, 110, 25)
 // make enemy chase the player 
 //  info
 info.setLife(3)
@@ -422,7 +414,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprit
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
     // stun enemy
-    enemy.vx = 0
+    enemy.vx = -25
     enemy.vy = 0
 })
 info.onLifeZero(function on_life_zero() {
@@ -451,7 +443,7 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             ......................7777..........7777........
             ...................7..............7.............
             ..............7..7.............7777.............
-            .....77777..7........7777..777..................
+            ..2..77777..7........7777..777..................
             777777..........................................
             444444444444444444444444444444444444444444444444
         `)
@@ -466,7 +458,7 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             ..............7...7.......7.......7..........7..
             ..............7...7.......7....7................
             ..............7...7.......7...7.................
-            ..................7.......7.....................
+            ..............2...7.......7.....................
             ..........777777777.......7777777777777777777777
             .........7......................................
             ........77......................................
@@ -474,6 +466,24 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             7777777.........................................
             444444444444444444444444444444444444444444444444
         `)
+        scene.setTile(2, img`
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        `, true)
     } else if (info.score() == 3) {
         scene.setTileMap(img`
             ................................................
@@ -488,11 +498,29 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             ............7...................................
             ............7...................................
             ............7......................7............
-            ................77774477..7.....7.....7.....7..6
+            ............2...77774477..7.....7.....7.....7..6
             ..........7777......44.......7...........7....77
             77777777............44..........................
             444444444444444444444444444444444444444444444444
         `)
+        scene.setTile(2, img`
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        `, true)
     } else if (info.score() == 4) {
         scene.setTileMap(img`
             ................................................
@@ -512,6 +540,24 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             7777777.........................................
             444444444444444444444444444444444444444444444444
         `)
+        scene.setTile(2, img`
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        `, true)
     }
     
     tiles.placeOnTile(enemy, tiles.getTileLocation(0, 13))
@@ -521,6 +567,26 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
 })
 scene.onHitTile(SpriteKind.Enemy, 7, function on_hit_tile3(enemy: Sprite) {
     enemy.setFlag(SpriteFlag.Ghost, true)
+})
+scene.onHitTile(SpriteKind.Projectile, 2, function on_hit_tile4(sprite: Sprite) {
+    scene.setTile(2, img`
+        d 1 1 1 1 1 1 b d 1 1 1 1 1 1 b
+        1 d d d d d d b 1 d d d d d d b
+        1 d d d d d d b 1 d d d d d d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d d b 1 d d b b b c c
+        1 d d d d d d d b b b c c c c c
+        1 d d d d d d e b c 1 c c c c c
+        b b b b b b e c c 1 d d c c c c
+        c c c 1 c c c c c 1 d d c c c c
+        c c c 1 1 c c c c c 1 d d c c c
+        c c c 1 d d c c c c 1 d d c c c
+        c c 1 d d d c c c c c d d d c c
+        c c 1 d d d d c c c c d d b c c
+        c c 1 d d d d d c c c b b c c c
+        c c c b b b d d d b c c c c c c
+        c c c c c c b b b c c c c c c c
+    `, false)
 })
 game.onUpdateInterval(1000, function on_update_interval() {
     enemy.setFlag(SpriteFlag.Ghost, false)

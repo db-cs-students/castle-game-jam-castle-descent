@@ -185,31 +185,23 @@ scene.set_tile(6, img("""
     c b b b b b b b b b b b b b b c
 """), True) #exit
 scene.set_tile(2, img("""
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-    ........................
-""")) #Spike
+    d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+    1 d d d d d b d d d d d d d d b
+    1 d d d d d b d d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d b d d d d d d d b
+    1 d d d d d d d b d d d d d d b
+    1 d d d d d d d d b d d d d d b
+    1 d d d d d d d d b d d d d d b
+    1 d d d d d d d b 1 b b d d d b
+    1 d d d d d d d b 1 d d b b d b
+    1 d d d d d d b 1 d d d d d b b
+    1 d d d d d b b 1 d d d d d d b
+    1 d d d d d b 1 d d d d d d d b
+    1 d d d d b b 1 d d d d d d d b
+    b b b b b b b b b b b b b b b b
+"""), True) #cracked wall
 scene.set_tile(4, img("""
     5 4 4 5 5 4 4 4 4 2 2 2 4 4 4 4
     4 4 4 4 4 5 5 4 2 2 2 2 4 4 4 5
@@ -398,7 +390,7 @@ enemy = sprites.create(img("""
 
 tiles.place_on_tile(enemy, tiles.get_tile_location(0, 1)) #put enemy at starting point
 
-enemy.follow(Knight, 125, 25) #make enemy chase the player 
+enemy.follow(Knight, 110, 25) #make enemy chase the player 
 
 # info
 info.set_life(3)
@@ -411,7 +403,7 @@ def on_overlap(sprite, otherSprite): #hurt player when hitting enemy
     enemy.vy = 0
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_overlap)
 def on_overlap2(sprite, otherSprite): #stun enemy
-    enemy.vx = 0
+    enemy.vx = -25
     enemy.vy = 0
 sprites.on_overlap(SpriteKind.enemy, SpriteKind.projectile, on_overlap2)
 def on_life_zero(): #lose when dying
@@ -440,7 +432,7 @@ def on_hit_tile2(sprite): #win when hitting exit
             ......................7777..........7777........
             ...................7..............7.............
             ..............7..7.............7777.............
-            .....77777..7........7777..777..................
+            ..2..77777..7........7777..777..................
             777777..........................................
             444444444444444444444444444444444444444444444444
         """))
@@ -455,7 +447,7 @@ def on_hit_tile2(sprite): #win when hitting exit
             ..............7...7.......7.......7..........7..
             ..............7...7.......7....7................
             ..............7...7.......7...7.................
-            ..................7.......7.....................
+            ..............2...7.......7.....................
             ..........777777777.......7777777777777777777777
             .........7......................................
             ........77......................................
@@ -463,6 +455,24 @@ def on_hit_tile2(sprite): #win when hitting exit
             7777777.........................................
             444444444444444444444444444444444444444444444444
         """))
+        scene.set_tile(2, img("""
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        """), True)
     elif info.score() == 3:
         scene.set_tile_map(img("""
             ................................................
@@ -477,11 +487,29 @@ def on_hit_tile2(sprite): #win when hitting exit
             ............7...................................
             ............7...................................
             ............7......................7............
-            ................77774477..7.....7.....7.....7..6
+            ............2...77774477..7.....7.....7.....7..6
             ..........7777......44.......7...........7....77
             77777777............44..........................
             444444444444444444444444444444444444444444444444
         """))
+        scene.set_tile(2, img("""
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        """), True)
     elif info.score() == 4:
         scene.set_tile_map(img("""
             ................................................
@@ -501,6 +529,24 @@ def on_hit_tile2(sprite): #win when hitting exit
             7777777.........................................
             444444444444444444444444444444444444444444444444
         """))
+        scene.set_tile(2, img("""
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        """), True)
 
     tiles.place_on_tile(enemy, tiles.get_tile_location(0, 13))
     tiles.place_on_tile(Knight, tiles.get_tile_location(3, 13))
@@ -512,6 +558,27 @@ scene.on_hit_tile(SpriteKind.player, 6, on_hit_tile2)
 def on_hit_tile3(enemy):
     enemy.set_flag(SpriteFlag.GHOST, True)
 scene.on_hit_tile(SpriteKind.enemy, 7, on_hit_tile3)
+
+def on_hit_tile4(sprite):
+    scene.set_tile(2, img("""
+        d 1 1 1 1 1 1 b d 1 1 1 1 1 1 b
+        1 d d d d d d b 1 d d d d d d b
+        1 d d d d d d b 1 d d d d d d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d d b 1 d d b b b c c
+        1 d d d d d d d b b b c c c c c
+        1 d d d d d d e b c 1 c c c c c
+        b b b b b b e c c 1 d d c c c c
+        c c c 1 c c c c c 1 d d c c c c
+        c c c 1 1 c c c c c 1 d d c c c
+        c c c 1 d d c c c c 1 d d c c c
+        c c 1 d d d c c c c c d d d c c
+        c c 1 d d d d c c c c d d b c c
+        c c 1 d d d d d c c c b b c c c
+        c c c b b b d d d b c c c c c c
+        c c c c c c b b b c c c c c c c
+    """), False)
+scene.on_hit_tile(SpriteKind.projectile, 2, on_hit_tile4)
 
 def on_update_interval():
     enemy.set_flag(SpriteFlag.GHOST, False)
