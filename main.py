@@ -330,10 +330,13 @@ controller.player1.on_button_event(ControllerButton.B, ControllerButtonEvent.PRE
 def on_jump(): #jump
     if Knight.is_hitting_tile(CollisionDirection.BOTTOM): 
         Knight.vy = -85
+        music.play_melody("F5 C5", 500)
     elif Knight.is_hitting_tile(CollisionDirection.LEFT): #wall jump
         Knight.vy = -85
+        music.play_melody("F5 C5", 500)
     elif Knight.is_hitting_tile(CollisionDirection.RIGHT):
         Knight.vy = -85 
+        music.play_melody("F5 C5", 500)
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_jump)
 
 def on_update(): #turn sprite
@@ -440,6 +443,7 @@ def on_hit_tile(Knight): #reset on hit lava
 
     enemy.vx = 0
     enemy.vy = 0
+    
 scene.on_hit_tile(SpriteKind.player, 4, on_hit_tile)
 
 def on_hit_tile2(sprite): #win when hitting exit

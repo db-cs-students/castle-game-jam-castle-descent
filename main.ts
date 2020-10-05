@@ -336,11 +336,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_jump() {
     // jump
     if (Knight.isHittingTile(CollisionDirection.Bottom)) {
         Knight.vy = -85
+        music.playMelody("F5 C5", 500)
     } else if (Knight.isHittingTile(CollisionDirection.Left)) {
         // wall jump
         Knight.vy = -85
+        music.playMelody("F5 C5", 500)
     } else if (Knight.isHittingTile(CollisionDirection.Right)) {
         Knight.vy = -85
+        music.playMelody("F5 C5", 500)
     }
     
 })
