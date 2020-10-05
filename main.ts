@@ -422,7 +422,7 @@ enemy.follow(Knight, 110, 20)
 // make enemy chase the player 
 //  info
 info.setLife(3)
-info.setScore(0)
+info.setScore(3)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     // hurt player when hitting enemy
     info.changeLifeBy(-1)
