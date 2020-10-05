@@ -241,22 +241,22 @@ scene.set_tile(5, img("""
 
 #creating sprites
 Knight = sprites.create(img("""
-    . . . . . . f f f f f f . . . .
-    . . . . f f e e e e f 2 f . . .
-    . . . f f e e e e f 2 2 2 f . .
-    . . . f e e e f f e e e e f . .
-    . . . f f f f e e 2 2 2 2 e f .
-    . . . f e 2 2 2 f f f f e 2 f .
-    . . f f f f f f f e e e f f f .
-    . . f f e 4 4 e b f 4 4 e e f .
-    . . f e e 4 d 4 1 f d d e f . .
-    . . . f e e e 4 d d d d f . . .
-    . . . . f f e e 4 4 4 e f . . .
-    . . . . . 4 d d e 2 2 2 f . . .
-    . . . . . e d d e 2 2 2 f . . .
-    . . . . . f e e f 4 5 5 f . . .
-    . . . . . . f f f f f f . . . .
-    . . . . . . . f f f . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . f f f f f f . . . . .
+    . . . f f e e e e f 2 f . . . .
+    . . f f e e e e f 2 2 2 f . . .
+    . . f e e e f f e e e e f . . .
+    . . f f f f e e 2 2 2 2 e f . .
+    . . f e 2 2 2 f f f f e 2 f . .
+    . f f f f f f f e e e f f f . .
+    . f f e 4 4 e b f 4 4 e e f . .
+    . f e e 4 d 4 1 f d d e f . . .
+    . . f e e e e e d d d f . . . .
+    . . . . f 4 d d e 4 e f . . . .
+    . . . . f e d d e 2 2 f . . . .
+    . . . f f f e e f 5 5 f f . . .
+    . . . f f f f f f f f f f . . .
+    . . . . f f . . . f f f . . . .
 """), SpriteKind.player)
 
 tiles.place_on_tile(Knight, tiles.get_tile_location(3, 1))
@@ -411,17 +411,22 @@ enemy.follow(Knight, 110, 20) #make enemy chase the player
 
 # info
 info.set_life(3)
-info.set_score(3)
+info.set_score(0)
 
 def on_overlap(sprite, otherSprite): #hurt player when hitting enemy
     info.change_life_by(-1) #TODO try and make true invincibility frames
     enemy.set_flag(SpriteFlag.GHOST, True)
     enemy.vx = 0 
     enemy.vy = 0
+    music.play_melody("E4 D4 C3", 300)
+
 sprites.on_overlap(SpriteKind.player, SpriteKind.enemy, on_overlap)
 def on_overlap2(sprite, otherSprite): #stun enemy
+    otherSprite.destroy()
     enemy.vx = -15
     enemy.vy = 0
+    music.play_melody("F4 G4",1000)
+
 sprites.on_overlap(SpriteKind.enemy, SpriteKind.projectile, on_overlap2)
 def on_life_zero(): #lose when dying
     game.over(False)
@@ -590,7 +595,7 @@ def on_hit_tile2(sprite): #win when hitting exit
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
-            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777........3....................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
@@ -606,22 +611,22 @@ def on_hit_tile2(sprite): #win when hitting exit
             777777777777777777777777777777777777777777777777777777777777777777744444444444444444444444444444
         """))
         scene.set_tile(2, img("""
-        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d d b d d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d b 1 b b d d d b
-        1 d d d d d d d b 1 d d b b d b
-        1 d d d d d d b 1 d d d d d b b
-        1 d d d d d b b 1 d d d d d d b
-        1 d d d d d b 1 d d d d d d d b
-        1 d d d d b b 1 d d d d d d d b
-        b b b b b b b b b b b b b b b b
+            d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d d b d d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d b 1 b b d d d b
+            1 d d d d d d d b 1 d d b b d b
+            1 d d d d d d b 1 d d d d d b b
+            1 d d d d d b b 1 d d d d d d b
+            1 d d d d d b 1 d d d d d d d b
+            1 d d d d b b 1 d d d d d d d b
+            b b b b b b b b b b b b b b b b
         """), True)
     elif info.score() == 6:
         game.over(True)
@@ -655,6 +660,7 @@ def on_hit_tile4(sprite):
         c c c b b b d d d b c c c c c c
         c c c c c c b b b c c c c c c c
     """), False)
+    music.play_melody("B3 D3", 500)
 scene.on_hit_tile(SpriteKind.projectile, 2, on_hit_tile4)
 
 def on_hit_tile5(sprite):

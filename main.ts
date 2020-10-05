@@ -247,22 +247,22 @@ scene.setTile(5, img`
 // destroy ghost
 // creating sprites
 let Knight = sprites.create(img`
-    . . . . . . f f f f f f . . . .
-    . . . . f f e e e e f 2 f . . .
-    . . . f f e e e e f 2 2 2 f . .
-    . . . f e e e f f e e e e f . .
-    . . . f f f f e e 2 2 2 2 e f .
-    . . . f e 2 2 2 f f f f e 2 f .
-    . . f f f f f f f e e e f f f .
-    . . f f e 4 4 e b f 4 4 e e f .
-    . . f e e 4 d 4 1 f d d e f . .
-    . . . f e e e 4 d d d d f . . .
-    . . . . f f e e 4 4 4 e f . . .
-    . . . . . 4 d d e 2 2 2 f . . .
-    . . . . . e d d e 2 2 2 f . . .
-    . . . . . f e e f 4 5 5 f . . .
-    . . . . . . f f f f f f . . . .
-    . . . . . . . f f f . . . . . .
+    . . . . . . . . . . . . . . . .
+    . . . . . f f f f f f . . . . .
+    . . . f f e e e e f 2 f . . . .
+    . . f f e e e e f 2 2 2 f . . .
+    . . f e e e f f e e e e f . . .
+    . . f f f f e e 2 2 2 2 e f . .
+    . . f e 2 2 2 f f f f e 2 f . .
+    . f f f f f f f e e e f f f . .
+    . f f e 4 4 e b f 4 4 e e f . .
+    . f e e 4 d 4 1 f d d e f . . .
+    . . f e e e e e d d d f . . . .
+    . . . . f 4 d d e 4 e f . . . .
+    . . . . f e d d e 2 2 f . . . .
+    . . . f f f e e f 5 5 f f . . .
+    . . . f f f f f f f f f f . . .
+    . . . . f f . . . f f f . . . .
 `, SpriteKind.Player)
 tiles.placeOnTile(Knight, tiles.getTileLocation(3, 1))
 Knight.ay = 175
@@ -422,7 +422,7 @@ enemy.follow(Knight, 110, 20)
 // make enemy chase the player 
 //  info
 info.setLife(3)
-info.setScore(3)
+info.setScore(0)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     // hurt player when hitting enemy
     info.changeLifeBy(-1)
@@ -430,11 +430,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprit
     enemy.setFlag(SpriteFlag.Ghost, true)
     enemy.vx = 0
     enemy.vy = 0
+    music.playMelody("E4 D4 C3", 300)
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
     // stun enemy
+    otherSprite.destroy()
     enemy.vx = -15
     enemy.vy = 0
+    music.playMelody("F4 G4", 1000)
 })
 info.onLifeZero(function on_life_zero() {
     // lose when dying
@@ -601,7 +604,7 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
-            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777........3....................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
             7777777777777777777777777777777777777777777777777777777777777777777.............................
@@ -617,22 +620,22 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             777777777777777777777777777777777777777777777777777777777777777777744444444444444444444444444444
         `)
         scene.setTile(2, img`
-        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d d b d d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d b 1 b b d d d b
-        1 d d d d d d d b 1 d d b b d b
-        1 d d d d d d b 1 d d d d d b b
-        1 d d d d d b b 1 d d d d d d b
-        1 d d d d d b 1 d d d d d d d b
-        1 d d d d b b 1 d d d d d d d b
-        b b b b b b b b b b b b b b b b
+            d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d d b d d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d b 1 b b d d d b
+            1 d d d d d d d b 1 d d b b d b
+            1 d d d d d d b 1 d d d d d b b
+            1 d d d d d b b 1 d d d d d d b
+            1 d d d d d b 1 d d d d d d d b
+            1 d d d d b b 1 d d d d d d d b
+            b b b b b b b b b b b b b b b b
         `, true)
     } else if (info.score() == 6) {
         game.over(true)
@@ -665,6 +668,7 @@ scene.onHitTile(SpriteKind.Projectile, 2, function on_hit_tile4(sprite: Sprite) 
         c c c b b b d d d b c c c c c c
         c c c c c c b b b c c c c c c c
     `, false)
+    music.playMelody("B3 D3", 500)
 })
 scene.onHitTile(SpriteKind.Player, 5, function on_hit_tile5(sprite: Sprite) {
     enemy.destroy()
