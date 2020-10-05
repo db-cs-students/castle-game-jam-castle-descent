@@ -394,7 +394,7 @@ enemy.follow(Knight, 110, 25) #make enemy chase the player
 
 # info
 info.set_life(3)
-info.set_score(0)
+info.set_score(3)
 
 def on_overlap(sprite, otherSprite): #hurt player when hitting enemy
     info.change_life_by(-1) #TODO try and make true invincibility frames

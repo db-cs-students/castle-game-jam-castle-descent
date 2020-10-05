@@ -127,9 +127,9 @@ scene.setBackgroundImage(img`
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
     cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 `)
-// game.splash("Press A to jump")
-// game.splash("You can climb walls by pressing A while against a wall")
-// game.splash("Press B to shoot arrows and slow the ghost")
+game.splash("Press A to jump")
+game.splash("You can climb walls by pressing A while against a wall")
+game.splash("Press B to shoot arrows and slow the ghost")
 // tilemaps
 scene.setTileMap(img`
     ................................................
@@ -140,13 +140,13 @@ scene.setTileMap(img`
     ...................7.............77.....7...44..
     ....................7.........7......77.....44..
     .............................7..............44..
-    ............77777.......777.................44..
-    ......................7.....................44..
-    ...................7........................44..
-    444444444444444444444444444444444444444444444444
-    444444444444444444444444444444444444444444444444
-    444444444444444444444444444444444444444444444444
-    444444444444444444444444444444444444444444444444
+    ...........777777.......777.................44..
+    ..........77..........7.....................44..
+    .........77........7........................44..
+    ........77..................................44..
+    .....77.....................................44..
+    ....77......................................44..
+    777774444444444444444444444444444444444444444444
     444444444444444444444444444444444444444444444444
 `)
 // tilemap
@@ -226,6 +226,25 @@ scene.setTile(4, img`
     4 5 5 5 4 4 4 4 2 2 2 2 4 2 4 4
 `, true)
 // lava
+scene.setTile(5, img`
+    . . . . . . . . . . . . . . . .
+    . . . . . . 6 6 6 6 . . . . . .
+    . . . . 6 6 6 5 5 6 6 6 . . . .
+    . . . 7 7 7 7 6 6 6 6 6 6 . . .
+    . . 6 7 7 7 7 8 8 8 1 1 6 6 . .
+    . . 7 7 7 7 7 8 8 8 1 1 5 6 . .
+    . 6 7 7 7 7 8 8 8 8 8 5 5 6 6 .
+    . 6 7 7 7 8 8 8 6 6 6 6 5 6 6 .
+    . 6 6 7 7 8 8 6 6 6 6 6 6 6 6 .
+    . 6 8 7 7 8 8 6 6 6 6 6 6 6 6 .
+    . . 6 8 7 7 8 6 6 6 6 6 8 6 . .
+    . . 6 8 8 7 8 8 6 6 6 8 6 6 . .
+    . . . 6 8 8 8 8 8 8 8 8 6 . . .
+    . . . . 6 6 8 8 8 8 6 6 . . . .
+    . . . . . . 6 6 6 6 . . . . . .
+    . . . . . . . . . . . . . . . .
+`, true)
+// destroy ghost
 // creating sprites
 let Knight = sprites.create(img`
     . . . . . . f f f f f f . . . .
@@ -399,11 +418,11 @@ let enemy = sprites.create(img`
 `, SpriteKind.Enemy)
 tiles.placeOnTile(enemy, tiles.getTileLocation(0, 1))
 // put enemy at starting point
-enemy.follow(Knight, 110, 25)
+enemy.follow(Knight, 110, 20)
 // make enemy chase the player 
 //  info
 info.setLife(3)
-info.setScore(0)
+info.setScore(3)
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprite: Sprite, otherSprite: Sprite) {
     // hurt player when hitting enemy
     info.changeLifeBy(-1)
@@ -414,7 +433,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function on_overlap(sprit
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function on_overlap2(sprite: Sprite, otherSprite: Sprite) {
     // stun enemy
-    enemy.vx = -25
+    enemy.vx = -15
     enemy.vy = 0
 })
 info.onLifeZero(function on_life_zero() {
@@ -422,8 +441,12 @@ info.onLifeZero(function on_life_zero() {
     game.over(false)
 })
 scene.onHitTile(SpriteKind.Player, 4, function on_hit_tile(Knight: Sprite) {
-    // lose when hitting lava
-    game.over(false)
+    // reset on hit lava
+    info.changeLifeBy(-1)
+    tiles.placeOnTile(enemy, tiles.getTileLocation(0, 13))
+    tiles.placeOnTile(Knight, tiles.getTileLocation(3, 13))
+    enemy.vx = 0
+    enemy.vy = 0
 })
 scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     // win when hitting exit
@@ -558,6 +581,61 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
         1 d d d d b b 1 d d d d d d d b
         b b b b b b b b b b b b b b b b
         `, true)
+    } else if (info.score() == 5) {
+        scene.setTileMap(img`
+            ................................................................................................
+            ................................................................................................
+            ................................................................................................
+            ................................................................................................
+            ................................................................................................
+            ................................................................................................
+            ..................................................................7.........7.......7.....7....7
+            ...............................................................7..7..7...7......7...............
+            ............................................................7.....7.....................7....7..
+            .............7...........................................7........7.............................
+            ................7..7.........7.......7................7...........7.............................
+            ......777777..........7..7.......7.......7.........7..............7.............................
+            .....7777777.................................7..7.................7.............................
+            ....77777777......................................................7.............................
+            777777777777......................................................7.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            7777777777777777777777777777777777777777777777777777777777777777777.............................
+            77777777777777777777777777777777777777777777777777777777777777777776.....7777.........7777.....5
+            7777777777777777777777777777777777777777777777777777777777777777777777..........7777........7777
+            777777777777777777777777777777777777777777777777777777777777777777744444444444444444444444444444
+            777777777777777777777777777777777777777777777777777777777777777777744444444444444444444444444444
+            777777777777777777777777777777777777777777777777777777777777777777744444444444444444444444444444
+        `)
+        scene.setTile(2, img`
+        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d b d d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d b d d d d d d d b
+        1 d d d d d d d b d d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d d b d d d d d b
+        1 d d d d d d d b 1 b b d d d b
+        1 d d d d d d d b 1 d d b b d b
+        1 d d d d d d b 1 d d d d d b b
+        1 d d d d d b b 1 d d d d d d b
+        1 d d d d d b 1 d d d d d d d b
+        1 d d d d b b 1 d d d d d d d b
+        b b b b b b b b b b b b b b b b
+        `, true)
+    } else if (info.score() == 6) {
+        game.over(true)
     }
     
     tiles.placeOnTile(enemy, tiles.getTileLocation(0, 13))
@@ -588,6 +666,27 @@ scene.onHitTile(SpriteKind.Projectile, 2, function on_hit_tile4(sprite: Sprite) 
         c c c c c c b b b c c c c c c c
     `, false)
 })
-game.onUpdateInterval(1000, function on_update_interval() {
+scene.onHitTile(SpriteKind.Player, 5, function on_hit_tile5(sprite: Sprite) {
+    enemy.destroy()
+    scene.setTile(5, img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    `, false)
+})
+game.onUpdateInterval(750, function on_update_interval() {
     enemy.setFlag(SpriteFlag.Ghost, false)
 })
