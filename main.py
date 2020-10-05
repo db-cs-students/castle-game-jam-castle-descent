@@ -443,7 +443,7 @@ def on_hit_tile(Knight): #reset on hit lava
 
     enemy.vx = 0
     enemy.vy = 0
-    
+    music.play_melody("d3 c3", 120)
 scene.on_hit_tile(SpriteKind.player, 4, on_hit_tile)
 
 def on_hit_tile2(sprite): #win when hitting exit

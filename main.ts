@@ -453,6 +453,7 @@ scene.onHitTile(SpriteKind.Player, 4, function on_hit_tile(Knight: Sprite) {
     tiles.placeOnTile(Knight, tiles.getTileLocation(3, 13))
     enemy.vx = 0
     enemy.vy = 0
+    music.playMelody("d3 c3", 120)
 })
 scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     // win when hitting exit
