@@ -437,10 +437,10 @@ info.on_life_zero(on_life_zero)
 
 def on_hit_tile(Knight): #reset on hit lava
     info.change_life_by(-1)
-
+    #place enemy and Player at start
     tiles.place_on_tile(enemy, tiles.get_tile_location(0, 13))
     tiles.place_on_tile(Knight, tiles.get_tile_location(3, 13))
-
+    #reset enemy velocity
     enemy.vx = 0
     enemy.vy = 0
     music.play_melody("d3 c3", 120)
@@ -450,7 +450,7 @@ def on_hit_tile2(sprite): #win when hitting exit
     info.change_score_by(1)
     music.play_melody("e4 d4 e4 c4 e4 b4 a4", 350)
 
-    if info.score() == 1:
+    if info.score() == 1: #change level
         scene.set_tile_map(img("""
             ................................................
             ................................................
@@ -642,11 +642,11 @@ def on_hit_tile2(sprite): #win when hitting exit
     enemy.vy = 0
 scene.on_hit_tile(SpriteKind.player, 6, on_hit_tile2)
 
-def on_hit_tile3(enemy):
+def on_hit_tile3(enemy): #make enemy go through walls
     enemy.set_flag(SpriteFlag.GHOST, True)
 scene.on_hit_tile(SpriteKind.enemy, 7, on_hit_tile3)
 
-def on_hit_tile4(sprite):
+def on_hit_tile4(sprite): #destroy cracked wall
     scene.set_tile(2, img("""
         d 1 1 1 1 1 1 b d 1 1 1 1 1 1 b
         1 d d d d d d b 1 d d d d d d b
@@ -690,6 +690,6 @@ def on_hit_tile5(sprite):
     """), False)
 scene.on_hit_tile(SpriteKind.player, 5, on_hit_tile5)
 
-def on_update_interval():
+def on_update_interval(): #make enemy collide after going through wall
     enemy.set_flag(SpriteFlag.GHOST, False)
 game.on_update_interval(750, on_update_interval)

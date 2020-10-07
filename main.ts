@@ -447,8 +447,10 @@ info.onLifeZero(function on_life_zero() {
 scene.onHitTile(SpriteKind.Player, 4, function on_hit_tile(Knight: Sprite) {
     // reset on hit lava
     info.changeLifeBy(-1)
+    // place enemy and Player at start
     tiles.placeOnTile(enemy, tiles.getTileLocation(0, 13))
     tiles.placeOnTile(Knight, tiles.getTileLocation(3, 13))
+    // reset enemy velocity
     enemy.vx = 0
     enemy.vy = 0
     music.playMelody("d3 c3", 120)
@@ -458,6 +460,7 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     info.changeScoreBy(1)
     music.playMelody("e4 d4 e4 c4 e4 b4 a4", 350)
     if (info.score() == 1) {
+        // change level
         scene.setTileMap(img`
             ................................................
             ................................................
@@ -650,9 +653,11 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     enemy.vy = 0
 })
 scene.onHitTile(SpriteKind.Enemy, 7, function on_hit_tile3(enemy: Sprite) {
+    // make enemy go through walls
     enemy.setFlag(SpriteFlag.Ghost, true)
 })
 scene.onHitTile(SpriteKind.Projectile, 2, function on_hit_tile4(sprite: Sprite) {
+    // destroy cracked wall
     scene.setTile(2, img`
         d 1 1 1 1 1 1 b d 1 1 1 1 1 1 b
         1 d d d d d d b 1 d d d d d d b
@@ -695,5 +700,6 @@ scene.onHitTile(SpriteKind.Player, 5, function on_hit_tile5(sprite: Sprite) {
     `, false)
 })
 game.onUpdateInterval(750, function on_update_interval() {
+    // make enemy collide after going through wall
     enemy.setFlag(SpriteFlag.Ghost, false)
 })
