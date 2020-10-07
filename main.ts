@@ -145,9 +145,9 @@ scene.setTileMap(img`
     .........77........7........................44..
     ........77..................................44..
     .....77.....................................44..
-    ....77......................................44..
-    777774444444444444444444444444444444444444444444
-    444444444444444444444444444444444444444444444444
+    ....777.....................................44..
+    777777744444444444444444444444444444444444444444
+    777777744444444444444444444444444444444444444444
 `)
 // tilemap
 scene.setTile(7, img`
@@ -456,6 +456,7 @@ scene.onHitTile(SpriteKind.Player, 4, function on_hit_tile(Knight: Sprite) {
 scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
     // win when hitting exit
     info.changeScoreBy(1)
+    music.playMelody("e4 d4 e4 c4 e4 b4 a4", 350)
     if (info.score() == 1) {
         scene.setTileMap(img`
             ................................................
@@ -472,8 +473,8 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             ...................7..............7.............
             ..............7..7.............7777.............
             ..2..77777..7........7777..777..................
-            777777..........................................
-            444444444444444444444444444444444444444444444444
+            7777777777......................................
+            777777777744444444444444444444444444444444444444
         `)
     } else if (info.score() == 2) {
         scene.setTileMap(img`
@@ -492,25 +493,25 @@ scene.onHitTile(SpriteKind.Player, 6, function on_hit_tile2(sprite: Sprite) {
             ........77......................................
             ......7.........................................
             7777777.........................................
-            444444444444444444444444444444444444444444444444
+            777777744444444444444444444444444444444444444444
         `)
         scene.setTile(2, img`
-        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d d b d d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d b 1 b b d d d b
-        1 d d d d d d d b 1 d d b b d b
-        1 d d d d d d b 1 d d d d d b b
-        1 d d d d d b b 1 d d d d d d b
-        1 d d d d d b 1 d d d d d d d b
-        1 d d d d b b 1 d d d d d d d b
-        b b b b b b b b b b b b b b b b
+            d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d d b d d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d b 1 b b d d d b
+            1 d d d d d d d b 1 d d b b d b
+            1 d d d d d d b 1 d d d d d b b
+            1 d d d d d b b 1 d d d d d d b
+            1 d d d d d b 1 d d d d d d d b
+            1 d d d d b b 1 d d d d d d d b
+            b b b b b b b b b b b b b b b b
         `, true)
     } else if (info.score() == 3) {
         scene.setTileMap(img`

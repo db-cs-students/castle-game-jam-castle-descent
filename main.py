@@ -144,9 +144,9 @@ scene.set_tile_map(img("""
     .........77........7........................44..
     ........77..................................44..
     .....77.....................................44..
-    ....77......................................44..
-    777774444444444444444444444444444444444444444444
-    444444444444444444444444444444444444444444444444
+    ....777.....................................44..
+    777777744444444444444444444444444444444444444444
+    777777744444444444444444444444444444444444444444
 """)) #tilemap
 scene.set_tile(7, img("""
     b d d d d d d d d d d d d d d c
@@ -448,6 +448,7 @@ scene.on_hit_tile(SpriteKind.player, 4, on_hit_tile)
 
 def on_hit_tile2(sprite): #win when hitting exit
     info.change_score_by(1)
+    music.play_melody("e4 d4 e4 c4 e4 b4 a4", 350)
 
     if info.score() == 1:
         scene.set_tile_map(img("""
@@ -465,8 +466,8 @@ def on_hit_tile2(sprite): #win when hitting exit
             ...................7..............7.............
             ..............7..7.............7777.............
             ..2..77777..7........7777..777..................
-            777777..........................................
-            444444444444444444444444444444444444444444444444
+            7777777777......................................
+            777777777744444444444444444444444444444444444444
         """))
     elif info.score() == 2:
         scene.set_tile_map(img("""
@@ -485,25 +486,25 @@ def on_hit_tile2(sprite): #win when hitting exit
             ........77......................................
             ......7.........................................
             7777777.........................................
-            444444444444444444444444444444444444444444444444
+            777777744444444444444444444444444444444444444444
         """))
         scene.set_tile(2, img("""
-        d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d b d d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d b d d d d d d d b
-        1 d d d d d d d b d d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d d b d d d d d b
-        1 d d d d d d d b 1 b b d d d b
-        1 d d d d d d d b 1 d d b b d b
-        1 d d d d d d b 1 d d d d d b b
-        1 d d d d d b b 1 d d d d d d b
-        1 d d d d d b 1 d d d d d d d b
-        1 d d d d b b 1 d d d d d d d b
-        b b b b b b b b b b b b b b b b
+            d 1 1 1 1 b 1 1 1 1 1 1 1 1 1 b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d b d d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d b d d d d d d d b
+            1 d d d d d d d b d d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d d b d d d d d b
+            1 d d d d d d d b 1 b b d d d b
+            1 d d d d d d d b 1 d d b b d b
+            1 d d d d d d b 1 d d d d d b b
+            1 d d d d d b b 1 d d d d d d b
+            1 d d d d d b 1 d d d d d d d b
+            1 d d d d b b 1 d d d d d d d b
+            b b b b b b b b b b b b b b b b
         """), True)
     elif info.score() == 3:
         scene.set_tile_map(img("""
